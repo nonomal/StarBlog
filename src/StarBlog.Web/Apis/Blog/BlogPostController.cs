@@ -53,6 +53,13 @@ public class BlogPostController : ControllerBase {
         return post == null ? ApiResponse.NotFound() : new ApiResponse<Post>(post);
     }
 
+    [AllowAnonymous]
+    [HttpGet("slug/{slug}")]
+    public async Task<ApiResponse<Post>> GetBySlug(string slug) {
+        var post = await _postService.GetBySlug(slug);
+        return post == null ? ApiResponse.NotFound() : new ApiResponse<Post>(post);
+    }
+
     [HttpDelete("{id}")]
     public async Task<ApiResponse> Delete(string id) {
         var post = await _postService.GetById(id);

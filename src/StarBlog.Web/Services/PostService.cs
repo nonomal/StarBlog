@@ -61,6 +61,12 @@ public class PostService {
         return post;
     }
 
+    public async Task<Post?> GetBySlug(string slug) {
+        var post = await _postRepo.Where(a => a.Slug == slug).FirstAsync();
+        if (post != null) post.Content = MdImageLinkConvert(post, true);
+        return post;
+    }
+
     public async Task<int> Delete(string id) {
         // todo 删除文章的时候顺便删除对应的图片资源
         return await _postRepo.DeleteAsync(a => a.Id == id);
